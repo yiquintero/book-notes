@@ -1,6 +1,8 @@
 # Clean Architecture
 Notes from the book *Clean Architecture - A Craftman's Guide to Software Structure and Design* by Robert C. Martin
 
+:toc:
+
 ## Chapter 1: What is Design and Architecture
 
 There is **no** difference between architecture and design, despite preconceptions that architecture operates at a high level and design takes care of low-level details. Little, low-level details support all the high-level decisions.
@@ -27,3 +29,25 @@ Eisenhower's Matrix
 Behaviour is urgent but not always particularly important. Architecture is important, but never particularly urgent.
 
 It is the responsibility of software developers to assert the importance of architecture over the urgency of features. It's always a struggle, but remember, as a software developer, you are a stakeholder.
+
+## Chapter 3: Paradigm Overview
+
+Paradigms are ways of programming, relatively unrelated to languages. A paradigm tells you which programming structures to use and when to use them.
+
+There are 3 programming paradigms (and there are unlikely to be any others):
+* **structured**: imposes discipline on direct transfer or control (removes go-to statements in favour of ifs/do/while/)
+* **object-oriented**: imposes discipline on indirect transfer of control (removes function pointers in favour of classes)
+* **functional**: imposes discipline upon assignment (removes assignment, e.g. LISP)
+
+## Chapter 4 Structured Programming
+
+Dijkstra (a dutch smart badass) said: 
+
+> Testing shows the presence, not the absence, of bugs.
+
+In other words, a program can be proven incorrect by a test, but it cannot be proven correct. All tests can do, after sufficient testing effort, is allow us to deem a program to be correct enough for our purposes. A program that is not provable -e.g. do to unrestrained use of `goto`- cannot be deemed correct no matter how many tests are applied to it.
+
+Structured programming forces us to recursively decompose a program into a set of small proable functions. We can then use tests to try to prove those small provable functions incorrect. 
+
+Software architects strive to define modules, components and services that are easily falsifiable (testable).
+
