@@ -3,6 +3,7 @@ Notes from the book *Clean Architecture - A Craftman's Guide to Software Structu
 
 :toc:
 
+## Part I: Introduction
 ## Chapter 1: What is Design and Architecture
 
 There is **no** difference between architecture and design, despite preconceptions that architecture operates at a high level and design takes care of low-level details. Little, low-level details support all the high-level decisions.
@@ -30,6 +31,7 @@ Behaviour is urgent but not always particularly important. Architecture is impor
 
 It is the responsibility of software developers to assert the importance of architecture over the urgency of features. It's always a struggle, but remember, as a software developer, you are a stakeholder.
 
+## Part II: Starting with the Bricks: Programming Paradigms
 ## Chapter 3: Paradigm Overview
 
 Paradigms are ways of programming, relatively unrelated to languages. A paradigm tells you which programming structures to use and when to use them.
@@ -97,9 +99,30 @@ Polymorphism in OO languages enabled the use of **plugin architectures**, where 
 
 Without this inversion, control typically flows downward: high-level functions call mid-level functions, which in turn call low-level ones. In such a structure, source code dependencies mirror the flow of control, creating tight coupling and making the system harder to change. By inverting this relationship, high-level functions remain stable and unaffected by changes in lower-level details.
 
+## Chapter 6: Functional Programming
 
- 
+A key charcteristic of functional programming languages is that variables are initialized, but never modified. That is, variables are _inmutable_. When variables are inmutable, problems like race conditions, deadlock conditions and concurrent update problems cannot happen. However, in order to practically implement inmutability, two main compromises need to be made.
 
+### Segregation of Mutability
+Divide the application into mutable and inmutable components. The inmutable components perform their tasks in a purely functional way, without using any mutable variables. The inmutable components comunicate with one or more other components that are not purely functional, and allow for the state of variables to be mutated. Mutable variables are protected from concurrent updates or race conditions via a _transactional memory_ scheme (transaction or retry). Architects are advised to push as much processing as possible into the inmutable components, and reduce the amount of code in the components that allow mutations.
+  
+### Event sourcing
+Event sourcing is a strategy wherein we store transactions, but not the state. When state is required, we simply apply all the transactions from the beginning of time. This approach eliminates the possibility of concurrent update issues, since data is only created and read, never updated or deleted. A significant disadvantage of this approach is the huge data-storage capacity required. Shortcuts can be taken, for example saving the state every 24 hrs. Version control systems implement this approach.
+
+## Part III: Design Principles
+
+The SOLID principles tell us how to arrange our functions and data structures into components, and how these components should be interconnected. The goal of the principles is the creation of mid-level software structures that:
+* tolerate change
+* are easy to understand
+* are the basis of components that can be used in many software systems
+
+The SOLID principles are:
+* **SRP: Single Responsability Principle** - each software module has one, and only one, reason to change (a single stakeholder or actor).
+* **OCP: Open-Closed Principle** - For software to be easy to change, it must be designed to allow changes by adding new code, rather than changing existing code. I.e. software modules should be open for extension, but closed for modification. This allows for stable, tested code to remain untouched and new requirements can be introduces without rewriting.
+* **LSP: Liskov Substitution Principle** - To build software systems from interchangeable parts, those parts must adhere to a contract that allows those parts to be substituted for one another. "Is-a" should behave as "is a".
+* **ISP: Interface Segregation Principle** - Don’t create interfaces that force classes to implement methods they don’t need. Instead, break them up into smaller, more specific interfaces, tailored to the exact needs of the client.
+* **DIP: Dependency Inversion Principle** - High-level modules should not depend on low-level modules. Both should depend on abstractions.
+Abstractions should not depend on details. Details should depend on abstractions.
 
 
 
