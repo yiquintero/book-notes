@@ -39,7 +39,7 @@ There are 3 programming paradigms (and there are unlikely to be any others):
 * **object-oriented**: imposes discipline on indirect transfer of control (removes function pointers in favour of classes)
 * **functional**: imposes discipline upon assignment (removes assignment, e.g. LISP)
 
-## Chapter 4 Structured Programming
+## Chapter 4: Structured Programming
 
 Dijkstra (a dutch smart badass) said: 
 
@@ -50,4 +50,56 @@ In other words, a program can be proven incorrect by a test, but it cannot be pr
 Structured programming forces us to recursively decompose a program into a set of small proable functions. We can then use tests to try to prove those small provable functions incorrect. 
 
 Software architects strive to define modules, components and services that are easily falsifiable (testable).
+
+## Chapter 5: Object-Oriented Programming
+
+A common way to explain the nature of Object-Oriented design is with the terms: encapsulation, inheritance and polymorphism. Perfect encapsulation exists in non-OO languages like C (see below). Inheritance can also be achieved, albeit in a hacky way, in a non-OO language like C. It is the advantages of polymorphism where OO languages shine. Although polymorphism can also be achieved in a non-OO language like C using function pointers, OO languages made polymorphism much more safe and conveninet.
+
+<details>
+ <summary> Encapsulation </summary>
+
+ **Premise:** OO languages provide easy and effective encapsulation of data and function. As a result, a line can be drawn around a cohesive set of data and functions. Outside that line, the data is hidden and only some functions are known. We see this concept in action as the private data members and the public member functions of a class.
+
+**Refutation:** Perfect encapsulation exists in non-OO languages like C, as shown in the example below. Users of point.h have no knowledge of the implementation of either the Point data structure or the functions. Then came OO in the form of C++ and perfect encapsulation was broken: because the c++ compiler needs to know the size of the instances of each class, point.h clients know about the implementation details of the Point struct (member variables X and Y). Encapsulation was partially repaired by introducing the `public`, `private` and `protected`.
+
+```C
+// point.h
+struct Point;
+structure Point* makePoint(double x, double y);
+double distance(struct Point *p1, struct Point *p2);
+```
+
+```C
+// point.c
+#include "point.h"
+
+struct Point {
+ double x, y;
+};
+
+structure Ponint* makePoint(double x, double y) {
+ sruct Point* p = malloc(sizeof(struct Point));
+ p->x = x;
+ p->y = y;
+ return p;
+}
+
+double distance(struct Point* p1, struct Point* p2) {
+ double dx = p1->x - p2->x;
+ double dy = p1->y - p2->y;
+ return sqrt(dx*dx+dy*dy);
+}
+```
+</details>
+
+### Dependency Inversion
+Polymorphism in OO languages enabled the use of **plugin architectures**, where low level (utility) functions act as interchangeable components (or plugins) for high level functions. An interface or abstraction layer mediates between them, allowing high-level functions to depend on abstractions rather than concrete implementations.
+
+Without this inversion, control typically flows downward: high-level functions call mid-level functions, which in turn call low-level ones. In such a structure, source code dependencies mirror the flow of control, creating tight coupling and making the system harder to change. By inverting this relationship, high-level functions remain stable and unaffected by changes in lower-level details.
+
+
+ 
+
+
+
 
